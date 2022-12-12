@@ -1,10 +1,15 @@
 # ReiBot
 
 Cool Bot
-Ill Add Commands Under Here
--------------------------------
-/ping - replies with pong (From Discord.js guide)
 
-/userinfo - replies with (This command was run by ' + interaction.user.username + ', who joined on ' + interaction.member.joinedAt + '.')
+### Commands
 
-/serverinfo - replies with info about the server
++ **/ping** This command replies with pong
++ **/serverinfo** This command gives the name and the member count of a server
++ **/userinfo** This command gives the Username and Join date of the person who used it
++ **/getavatar** Returns the avatar of the given user
++ **/github** Shows this github repository
++ **/rps** Play a game of Rock Paper Scizzors against ReiBot
+
+### Thanks
+I give my thanks to discord.js, The Unix Cafe, and my boredom.
