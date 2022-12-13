@@ -10,6 +10,7 @@ Cool Bot
 + **/getavatar** Returns the avatar of the given user
 + **/github** Shows this github repository
 + **/rps** Play a game of Rock Paper Scizzors against ReiBot
++ **/poll** Sends a poll, given a name and 2 options.
 
 ### Thanks
 I give my thanks to discord.js, The Unix Cafe, and my boredom.
