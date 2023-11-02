@@ -82,9 +82,8 @@ module.exports = {
 
 
 
-/**
- * @todo Fix the code below!
- */
+
+// FIXME
 // module.exports = {
 //     data: new SlashCommandBuilder()
 //         .setName('help')

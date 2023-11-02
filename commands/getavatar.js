@@ -9,8 +9,8 @@ module.exports = {
             .setDescription('The User you wanna view')
             .setRequired(true)),
 
-    async execute(cmd) {
-        const user = cmd.options.getUser("user") || cmd.user;
-        await cmd.reply(user.displayAvatarURL());
+    async execute(interaction) {
+        const user = interaction.options.getUser("user") || interaction.user;
+        await interaction.reply(user.displayAvatarURL());
     }
 };
