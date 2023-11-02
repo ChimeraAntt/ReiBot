@@ -7,24 +7,24 @@ module.exports = {
         .addStringOption((option) => option
             .setName('emoji')
             .setDescription('Emoji to Steal')
-            .setRequired(true))
-        .addStringOption((option) => option
-            .setName('type')
-            .setDescription('gif or png?')
-            .setRequired(true)
-            .addChoices({ name: "PNG", value: 'png' }, { name: "GIF", value: 'gif'}))
-        .setDefaultMemberPermissions(1 << 30),
+            .setRequired(true)),
     async execute(interaction){
-        const emoji = interaction.options.getString('emoji');
-        const choice = interaction.options.getString('type');
-        const emojiId1 = emoji.split(':')[2];
-        const emojiId = emojiId1.split('>')[0];
-        if(choice === 'png'){
-            const emojiURL = `https://cdn.discordapp.com/emojis/${emojiId}.png`
-            await interaction.reply({ files: [emojiURL]})
-        }else if(choice === 'gif'){
-            const emojiURL = `https://cdn.discordapp.com/emojis/${emojiId}.gif`
-            await interaction.reply({ files: [emojiURL]})
+        const emojiName = interaction.options.getString('emoji')
+        const emojiCheck = emojiName.substring(0,2)
+        const isAnimated = ((emojiName.substring(0,2) === "<a") ? true : false)
+        
+        if(!((emojiCheck === "<:") || (emojiCheck === "<a"))){
+            await interaction.reply("This is not an emoji...")
+        }else{
+            const emojiId = (emojiName.split(':')[2]).split('>')[0]
+            
+            if(isAnimated){
+                const emojiURL = `https://cdn.discordapp.com/emojis/${emojiId}.gif`
+                await interaction.reply({ files: [emojiURL]})
+            }else{
+                const emojiURL = `https://cdn.discordapp.com/emojis/${emojiId}.png`
+                await interaction.reply({ files: [emojiURL]})
+            }
         }
     }
 }
