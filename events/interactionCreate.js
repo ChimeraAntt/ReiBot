@@ -1,5 +1,4 @@
 const { Events } = require('discord.js');
-const { execute } = require('./ready');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -19,5 +18,6 @@ module.exports = {
 			console.error(`Error executing ${interaction.commandName}`);
 			console.error(error);
 		}
+
 	},
 };

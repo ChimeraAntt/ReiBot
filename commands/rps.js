@@ -45,6 +45,5 @@ module.exports = {
         }else{
             await interaction.reply({content: "This is not an option",ephemeral: true});
         }
-
     },
 };
