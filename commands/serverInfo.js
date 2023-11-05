@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-// TODO remake this!!!
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('serverinfo')
@@ -10,12 +9,14 @@ module.exports = {
         const guild = interaction.guild
         const guildName = guild.name
 
+        //Guild Icon
         const icon = guild.iconURL({
             'extension': 'png',
             'dynamic': true,
             'size': 2048
         })
 
+        //More Guild Info
         const createdAt = Math.round(guild.createdTimestamp /1000 )
         const memberCount = guild.memberCount
         const owner = await guild.fetchOwner()
@@ -24,7 +25,7 @@ module.exports = {
         const isPartnered = guild.partnered
         const premiumTier = guild.premiumTier
         
-        //TODO make embed
+        // Create and send embed
         const embed = new EmbedBuilder()
         .setAuthor({name: `Info about ${guildName}!`, iconURL: icon})
         .setTitle(`${guildName}`)
