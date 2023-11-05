@@ -4,6 +4,7 @@ module.exports = {
         .setName('apod')
         .setDescription('Astronomy Picture Of The Day!'),
     async execute(interaction){
+        // Collect response from the API
         const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=93UvRBs00yyPiOdhdFM1sgHoH7tuJSfoN19UQSWp')
             .then(response => {
                 if (!response.ok) {
@@ -11,18 +12,19 @@ module.exports = {
                 }
                 return response.json();
             });
-            
-        if(response.hasOwnProperty('copyright')){
+
+        // Create variables for the response
+        if(response.hasOwnProperty('copyright')){ //Check for copyright info
             copyright = response.copyright;
         }else{
             copyright = "No Copyright Found..."
         }
-
         const date = response.date;
         const explanation = response.explanation;
         const url = response.url;
         const title = response.title;
 
+        // Create and send an Embed
         const embed = new EmbedBuilder()
             .setTitle(title)
             .setColor(0,0,0)

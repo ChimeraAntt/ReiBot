@@ -10,14 +10,12 @@ module.exports = {
             .setRequired(true)
 			.addChoices({ name: 'Rock', value: 'rock' }, { name: 'Paper', value: 'paper' }, { name: 'Scizzors', value: 'scizzors'})),    
     async execute(interaction){
+        // Grab the users choice, then randomly generate bot's choice
         const userOption = interaction.options.getString("rps");
         const botOptions = ["rock", "paper", "scizzors"];
         const botChoice = botOptions[Math.floor(Math.random()*botOptions.length)];
-        console.log(botChoice);
-        console.log(userOption);
 
-
-
+        // Play Rock, Paper, Scissors
         if(userOption == 'rock'){
             if(botChoice == 'rock'){
                 await interaction.reply("Rock ties with Rock");

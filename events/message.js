@@ -5,6 +5,7 @@ module.exports = {
     name: "messageCreate",
     async execute(message) {
         // Steal stickers
+        // ! if the sticker is animated this will not work, and will only supply a png.
         if(message.content.includes("^steal^") && message.type == MessageType.Reply){
             const stickerMessage = await message.fetchReference()
             if(stickerMessage.stickers.firstKey() != null){

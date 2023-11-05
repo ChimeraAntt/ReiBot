@@ -10,6 +10,7 @@ module.exports = {
             .setRequired(true)),
 
     async execute(interaction) {
+        // Get the users avatar and send it
         const user = interaction.options.getUser("user") || interaction.user;
         await interaction.reply(user.displayAvatarURL());
     }

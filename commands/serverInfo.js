@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 
+// TODO remake this!!!
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('serverinfo')

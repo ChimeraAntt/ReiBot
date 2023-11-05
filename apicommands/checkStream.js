@@ -10,8 +10,9 @@ module.exports = {
             .setDescription("check this streamer")
             .setRequired(true)),
     async execute(interaction){
+        // Get streamers name
         const streamer = interaction.options.getString('streamer');
-        try{
+        try{ // Attempt to collect the streamer info from Twitch API
             streaming = await fetch(
                 `https://api.twitch.tv/helix/streams?user_login=${streamer}`,
                 {
@@ -21,12 +22,11 @@ module.exports = {
                     }
                 }
             );
-            console.log("Success")
         } catch (error){
             await interaction.reply("Couldnt find this user?")
         }
 
-
+        // If not streaming, use this
         not_streaming = await fetch(`https://api.twitch.tv/helix/users?login=${streamer}`, {
             headers: {
                 'Authorization': `Bearer ${twitchAuth}`,
@@ -34,10 +34,12 @@ module.exports = {
             }
         });
 
+        // Variables for both streaming and not streaming
         const streamingJSON = await streaming.json();
         const nstreamingJSON = await not_streaming.json();
 
-        if(Object.keys(streamingJSON.data).length === 0){
+        
+        if(Object.keys(streamingJSON.data).length === 0){ // If streamer is not streaming, this is the response
             const username = nstreamingJSON.data[0].display_name;
             const pfp = nstreamingJSON.data[0].profile_image_url;
             const link = `https://www.twitch.tv/${username}`
@@ -49,7 +51,7 @@ module.exports = {
                 .setURL(link)
 
             await interaction.reply({ embeds : [embed], fetchReply : true});
-        }else{
+        }else{ // If the streamer is streaming use this one
             const username = streamingJSON.data[0].user_name;
             const game_name = streamingJSON.data[0].game_name;
             const title = streamingJSON.data[0].title;
@@ -66,7 +68,6 @@ module.exports = {
                 .setFields(
                     { name: "Viewer Count", value: current_viewers},
                 )
-
             await interaction.reply({ embeds : [embed], fetchReply : true})
         }
         

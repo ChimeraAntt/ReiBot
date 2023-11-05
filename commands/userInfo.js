@@ -9,13 +9,16 @@ module.exports = {
             .setRequired(true)),
 
     async execute(interaction){
+        // Fetch the supplied user's uid
         const user = await interaction.options.getUser('user').fetch()
         const uid = user.id
         const guildMember = await interaction.guild.members.fetch(`${uid}`)
 
+        // Collect users display and username
         const username = user.username
         const displayName = user.displayName
 
+        // Collect user's server and discord avatar
         const discordAvatar = await user.avatarURL(
             {
                 'extension': 'png',
@@ -23,10 +26,7 @@ module.exports = {
                 'size': 2048
             }
         )
-        const isBot = user.bot
 
-        const roles = guildMember.roles
-        const color = roles.highest.hexColor
         const serverAvatar = await guildMember.avatarURL(
             {
                 'extension': 'png',
@@ -35,9 +35,16 @@ module.exports = {
             }
         )
         
+        // Check if user is a bot
+        const isBot = user.bot
+
+        // Some other info
+        const roles = guildMember.roles
+        const color = roles.highest.hexColor
         const joinDate = Math.round(guildMember.joinedTimestamp /1000 )
         const creationDate =Math.round(user.createdTimestamp /1000 )
 
+        // Create and send user info embed
         const embed = new EmbedBuilder()
             .setAuthor({name: `Info about ${username}!`, iconURL: discordAvatar})
             .setTitle(`${displayName}`)
@@ -50,7 +57,6 @@ module.exports = {
                 {name: 'User\'s top role', value: `${roles.highest.name}`},
                 {name: 'Bot?', value: (isBot ? "Yes" : "Nope")},
             )
-
         await interaction.reply({ embeds : [embed], fetchReply : true})
     },
 };

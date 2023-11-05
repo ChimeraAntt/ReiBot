@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
+// TODO clean this!!!
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("conversion")
