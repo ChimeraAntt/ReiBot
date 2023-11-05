@@ -9,7 +9,7 @@ const { spawn } = require('child_process');
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 
 // Deploy commands
-const deployCommands = spawn('node', ['deploy-commands.js'], {
+deployCommands = spawn('node', ['deploy-commands.js'], {
 	cwd: __dirname,
 	stdio: 'inherit',
 });
@@ -32,80 +32,6 @@ for (const file of apiCommandFiles) {
 	const command = require(filePath);
 	client.commands.set(command.data.name, command);
 }
- 
-// Random Line Function for the bot status
-function getRandomLine(filename){
-	const data = fs.readFileSync(filename, "utf8");
-	const lines = data.split('\n');
-	return lines[Math.floor(Math.random()*lines.length)]
-}
-
-// Once the client is ready, begin randomizing status, as well as announce that the bot is ready
-client.once(Events.ClientReady, () => {
-	console.log('Robot Activate!');
-	const statusOptions = ["watching", "playing", "listening", "competing", "streaming"];
-	client.user.setPresence({
-		activities: [{ name: "Charging", type: ActivityType.Playing }],
-		status: 'active',
-	  });
-	let announced = false;
-	setInterval(async function(){
-		const statusChoice = statusOptions[Math.floor(Math.random()*statusOptions.length)]
-		//console.log(statusChoice);
-		if(statusChoice === "watching"){
-			const s = getRandomLine('status_files/watching.txt');
-			//console.log(s);
-			client.user.setPresence({
-				activities: [{ name: s, type: ActivityType.Watching }],
-				status: 'active',
-			  });
-		}else if(statusChoice === "playing"){
-			const s = getRandomLine('status_files/playing.txt');
-			//console.log(s);
-			client.user.setPresence({
-				activities: [{ name: s, type: ActivityType.Playing }],
-				status: 'active',
-			  });
-		}else if(statusChoice === "listening"){
-			const s = getRandomLine('status_files/listening.txt');
-			//console.log(s);
-			client.user.setPresence({
-				activities: [{ name: s, type: ActivityType.Listening }],
-				status: 'active',
-			  });
-		}else if(statusChoice === "competing"){
-			const s = getRandomLine('status_files/competing.txt');
-			//console.log(s);
-			const place = Math.floor(Math.random() * 10) + 1; 
-			if(place == 1){
-				suffix = 'st';
-			}else if(place == 2){
-				suffix = 'nd';
-			}else if(place == 3){
-				suffix = 'rd';
-			}else{
-				suffix = 'th';
-			}
-			client.user.setPresence({
-				activities: [{ name: s + `(` + place + suffix + ` place)`, type: ActivityType.Competing }],
-				status: 'active',
-			  });
-		}else if(statusChoice === "streaming"){
-			const s = getRandomLine('status_files/streaming.txt');
-			//console.log(s);
-			client.user.setPresence({
-				activities: [{ name: s, type: ActivityType.Streaming }],
-				status: 'active',
-			  });
-		}else{
-			client.user.setPresence({ activities: [{ name: 'In Your Walls' }], status: 'active' })
-		}
-		//}
-
-		
-	}, (25 * 1000))
-    // 60 * (Math.floor(Math.random() * 5) + 1)
-});
 
 // Collect event files
 const eventsPath = path.join(__dirname, 'events');
@@ -121,6 +47,11 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+// Stuff to do when the bot starts
+client.once(Events.ClientReady, () => {
+	console.log('Robot Activate!');
+});
 
 // Start client
 client.login(token);
