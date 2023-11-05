@@ -1,11 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const  { nasaKey } = require('../config.json');
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('apod')
         .setDescription('Astronomy Picture Of The Day!'),
     async execute(interaction){
         // Collect response from the API
-        const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=93UvRBs00yyPiOdhdFM1sgHoH7tuJSfoN19UQSWp')
+        const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${nasaKey}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("HTTP status code " + response.status);

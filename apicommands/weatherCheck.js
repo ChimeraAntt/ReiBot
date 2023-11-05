@@ -8,7 +8,38 @@ module.exports = {
         .addStringOption((option) => option
             .setName("place")
             .setDescription("Example: Town USA")
-            .setRequired(true)),
+            .setRequired(true))
+        .addIntegerOption((option) => option
+            .setName("time")
+            .setDescription("Time of day to get the forecast for")
+            .addChoices(
+                { name: '12 AM', value: '0' }, 
+                { name: '1 AM', value: '1' }, 
+                { name: '2 AM', value: '2' },
+                { name: '3 AM', value: '3' }, 
+                { name: '4 AM', value: '4' }, 
+                { name: '5 AM', value: '5' },
+                { name: '6 AM', value: '6' }, 
+                { name: '7 AM', value: '7' }, 
+                { name: '8 AM', value: '8' },
+                { name: '9 AM', value: '9' }, 
+                { name: '10 AM', value: '10' }, 
+                { name: '11 AM', value: '11' },
+                { name: '12 PM', value: '12' }, 
+                { name: '1 PM', value: '13' }, 
+                { name: '2 PM', value: '14' },
+                { name: '3 PM', value: '15' }, 
+                { name: '4 PM', value: '16' }, 
+                { name: '5 PM', value: '17' },
+                { name: '6 PM', value: '18' }, 
+                { name: '7 PM', value: '19' }, 
+                { name: '8 PM', value: '20' },
+                { name: '9 PM', value: '21' }, 
+                { name: '10 PM', value: '22' }, 
+                { name: '11 PM', value: '23' }
+            )
+            .setRequired(false)
+        ),
     async execute(interaction){
         // Collect the location name from the user input 
         const locationOption = `"${interaction.options.getString('place')}"`; 
@@ -50,7 +81,7 @@ module.exports = {
             const astro = starCheck.astronomy.astro
 
             const locationName = `${location.name}, ${location.region}, ${location.country}`
-            const localTime = location.localtime
+            const forecastTime = location.localtime
 
             const temp = [current.temp_f, current.temp_c]
             const tempFeelsLike = [current.feelslike_f, current.feelslike_c]
@@ -70,7 +101,7 @@ module.exports = {
                     .setTitle(`Weather in ${locationName}`)
                     .setAuthor({name: "Ayanami Weather", iconURL: "attachment://pfp.jpg"})
                     .setColor("#0076A2")
-                    .setFooter({text: `Current Time in ${location.name}: ${localTime}`})
+                    .setFooter({text: `Forecast Time in ${location.name}: ${forecastTime}`})
                     .setFields(
                         { name: "Temperature", value: `${temp[0]}F (${temp[1]}C)`},
                         { name: "Feels Like", value: `${tempFeelsLike[0]}F (${tempFeelsLike[1]}C)`},
