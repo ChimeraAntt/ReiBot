@@ -1,22 +1,20 @@
+// Import important things
 const fs = require('fs');
 const path = require('path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType, EmbedBuilder } = require('discord.js');
-const  token = require('./config.json');
+const  { token } = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+// Initialize the client
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 
-function getRandomLine(filename){
-	const data = fs.readFileSync(filename, "utf8");
-	const lines = data.split('\n');
-	return lines[Math.floor(Math.random()*lines.length)]
-}
-
+// Find all the command files
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const apiCommandsPath = path.join(__dirname,'apicommands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 const apiCommandFiles = fs.readdirSync(apiCommandsPath).filter(file => file.endsWith('.js'));
 
+// Initialize the commands
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
@@ -28,6 +26,14 @@ for (const file of apiCommandFiles) {
 	client.commands.set(command.data.name, command);
 }
  
+// Random Line Function for the bot status
+function getRandomLine(filename){
+	const data = fs.readFileSync(filename, "utf8");
+	const lines = data.split('\n');
+	return lines[Math.floor(Math.random()*lines.length)]
+}
+
+// Once the client is ready, begin randomizing status, as well as announce that the bot is ready
 client.once(Events.ClientReady, () => {
 	console.log('Robot Activate!');
 	const statusOptions = ["watching", "playing", "listening", "competing", "streaming"];
@@ -91,12 +97,14 @@ client.once(Events.ClientReady, () => {
 
 		
 	}, (25 * 1000))
-    //60 * (Math.floor(Math.random() * 5) + 1)
+    // 60 * (Math.floor(Math.random() * 5) + 1)
 });
 
+// Collect event files
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
+// Initialize and prepare events
 for (const file of eventFiles) {
 	const filePath = path.join(eventsPath, file);
 	const event = require(filePath);
@@ -107,4 +115,5 @@ for (const file of eventFiles) {
 	}
 }
 
+// Start client
 client.login(token);

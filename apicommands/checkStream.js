@@ -1,4 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const  { twitchAuth, twitchId } = require('../config.json');
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('check_stream')
@@ -14,8 +16,8 @@ module.exports = {
                 `https://api.twitch.tv/helix/streams?user_login=${streamer}`,
                 {
                     headers: {
-                        'Authorization': 'Bearer 92bqfpmi23rvitv33oba6x2nmrqont',
-                        'Client-Id': 'tmovhfkqxom9z7xkkx46b9jjzn0s9u'
+                        'Authorization': `Bearer ${twitchAuth}`,
+                        'Client-Id': `${twitchId}`
                     }
                 }
             );
@@ -27,8 +29,8 @@ module.exports = {
 
         not_streaming = await fetch(`https://api.twitch.tv/helix/users?login=${streamer}`, {
             headers: {
-                'Authorization': 'Bearer 92bqfpmi23rvitv33oba6x2nmrqont',
-                'Client-Id': 'tmovhfkqxom9z7xkkx46b9jjzn0s9u'
+                'Authorization': `Bearer ${twitchAuth}`,
+                'Client-Id': `${twitchId}`
             }
         });
 

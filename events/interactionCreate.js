@@ -1,8 +1,12 @@
+// Import important things
 const { Events } = require('discord.js');
 
+// Event code
 module.exports = {
+	// Name of event
 	name: 'interactionCreate',
 	async execute(interaction) {
+		// Checks for errors while commands are input or while they are being deployed
 		if (!interaction.isChatInputCommand()) return;
 
 		const command = interaction.client.commands.get(interaction.commandName);

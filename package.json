@@ -14,8 +14,12 @@
     "dotenv": "^16.0.3",
     "events": "^3.3.0",
     "exceljs": "^4.3.0",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg.js": "^4.2.9003",
+    "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "jquery": "^3.6.3",
+    "js-ffmpeg": "^0.0.38",
     "node-fetch": "^3.3.2",
     "path": "^0.12.7"
   }

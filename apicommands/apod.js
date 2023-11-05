@@ -11,6 +11,7 @@ module.exports = {
                 }
                 return response.json();
             });
+            
         if(response.hasOwnProperty('copyright')){
             copyright = response.copyright;
         }else{
