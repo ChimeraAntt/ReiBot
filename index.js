@@ -3,9 +3,16 @@ const fs = require('fs');
 const path = require('path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType, EmbedBuilder } = require('discord.js');
 const  { token } = require('./config.json');
+const { spawn } = require('child_process');
 
 // Initialize the client
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
+
+// Deploy commands
+const deployCommands = spawn('node', ['deploy-commands.js'], {
+	cwd: __dirname,
+	stdio: 'inherit',
+});
 
 // Find all the command files
 client.commands = new Collection();
